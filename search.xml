@@ -4,24 +4,11 @@
   
     
     <entry>
-      <title>记录步步高家教机刷原生GSI</title>
-      <link href="/2020/03/15/%E8%AE%B0%E5%BD%95%E6%AD%A5%E6%AD%A5%E9%AB%98%E5%AE%B6%E6%95%99%E6%9C%BA%E5%88%B7%E5%8E%9F%E7%94%9FGSI-1/"/>
-      <url>/2020/03/15/%E8%AE%B0%E5%BD%95%E6%AD%A5%E6%AD%A5%E9%AB%98%E5%AE%B6%E6%95%99%E6%9C%BA%E5%88%B7%E5%8E%9F%E7%94%9FGSI-1/</url>
-      
-        <content type="html"><![CDATA[]]></content>
-      
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>测试</title>
-      <link href="/2020/03/14/%E8%AE%B0%E5%BD%95%E6%AD%A5%E6%AD%A5%E9%AB%98%E5%AE%B6%E6%95%99%E6%9C%BA%E5%88%B7%E5%8E%9F%E7%94%9FGSI/"/>
-      <url>/2020/03/14/%E8%AE%B0%E5%BD%95%E6%AD%A5%E6%AD%A5%E9%AB%98%E5%AE%B6%E6%95%99%E6%9C%BA%E5%88%B7%E5%8E%9F%E7%94%9FGSI/</url>
+      <link href="/2020/03/15/%E8%AE%B0%E5%BD%95%E6%AD%A5%E6%AD%A5%E9%AB%98%E5%AE%B6%E6%95%99%E6%9C%BA%E5%88%B7%E5%8E%9F%E7%94%9FGSI/"/>
+      <url>/2020/03/15/%E8%AE%B0%E5%BD%95%E6%AD%A5%E6%AD%A5%E9%AB%98%E5%AE%B6%E6%95%99%E6%9C%BA%E5%88%B7%E5%8E%9F%E7%94%9FGSI/</url>
       
-        <content type="html"><![CDATA[<h1 id="记录家教机刷原生Gsi"><a href="#记录家教机刷原生Gsi" class="headerlink" title="记录家教机刷原生Gsi"></a>记录家教机刷原生Gsi</h1><p>最近不是某大佬制作出来了某步高S5的破解方案，破解完了一看，这玩意竟然支持PT，然后就试着刷了一下Erfan适用于A/B SAR的H2OS和Pixel-P，但是都卡在第二屏无法进入系统，然后我暂时回到了家教机官方的系统，利用软件好好看一下机器的分区方案</p><p>由于官方恢复工具用的是公版结构，即System.new.dat.br+Vendor.new.dat.br，直接用TWRP恢复也是可以的。</p><p>我还试着刷了一下V1.0.2版本的固件，但提示设备名称不相符，可能是官方为了防止降级想出来的阴招，回去看了看官网最新的刷机包，果然发现了刷机脚本里有修改机型名称的代码。</p><p>我下载了两个软件用来检查 Treble Check和Treble Info，不看不要紧，一看发现这玩意分区挺复杂的，先来看下Check的结果：</p><p><em>您的设备仅有一个分区（槽位A）</em></p><p>再看下Info：</p><p><em># System as Root</em></p><p><em>Your device supports System-as-Root.Use an A/B operating system</em></p><p>也就是说是个SAR A/B机型</p><p>理论上来说，出厂搭载Android9.0的设备都应该是System as Root并且为A/B</p><p>刷Magisk的输出结果也是System-as-Root</p><p>根据A/B的概念，这个设备应该是没有独立的recovery分区，但我在其上检测不到rec的存在。但是刷机包里面倒是真没有recovery</p><p>既然过第一屏了，那么基本可以确定是SAR A/B机型，但是卡在第二屏只有两个可能，第一个是驱动问题，第二个是补丁，与vendor应该无关</p><p>但现在仍然无法确定家教机的pt，以及vendor结构</p><p>等等，那么说有没有是A only的可能呢</p><p>我又刷了A only的Color OS，Pixel，POSP，AOSP，H2OS，MIUI，无一成功，全部无法过第一屏</p><p>话说回来，补丁的问题可能性最大，我的刷机流程都是这样的：</p><p>刷底包（因为暂时无第三方可选就用了自制底包）—清System Data Cache —刷系统镜像—permissioner_V4/5—magisk—结束</p><p>我在我的魅族手机TWRP里发现解除AVB2.0校验，里面的说明如下：</p><p><em>确定要关闭avb2.0校验？</em></p><p><em>DM校验可能会导致设备卡在第一屏。</em></p><p><em>有些设备需要关闭AVB2.0</em></p><p><em>关闭AVB2.0后，可以启动修改的系统或者ROM</em></p><p>我从LR.TEAM中提取出来相应的数据包，在家教机上试下：目录/supersu/no-verity-opt-encrypt</p>]]></content>
+        <content type="html"><![CDATA[<h1 id="记录家教机刷原生Gsi"><a href="#记录家教机刷原生Gsi" class="headerlink" title="记录家教机刷原生Gsi"></a>记录家教机刷原生Gsi</h1><p>最近不是某大佬制作出来了某步高S5的破解方案，破解完了一看，这玩意竟然支持PT，然后就试着刷了一下Erfan适用于A/B SAR的H2OS和Pixel-P，但是都卡在第二屏无法进入系统，然后我暂时回到了家教机官方的系统，利用软件好好看一下机器的分区方案</p><p>由于官方恢复工具用的是公版结构，即System.new.dat.br+Vendor.new.dat.br，直接用TWRP恢复也是可以的。</p><p>我还试着刷了一下V1.0.2版本的固件，但提示设备名称不相符，可能是官方为了防止降级想出来的阴招，回去看了看官网最新的刷机包，果然发现了刷机脚本里有修改机型名称的代码。</p><p>我下载了两个软件用来检查 Treble Check和Treble Info，不看不要紧，一看发现这玩意分区挺复杂的，先来看下Check的结果：</p><p><em>您的设备仅有一个分区（槽位A）</em></p><p>再看下Info：</p><h1 id="System-as-Root"><a href="#System-as-Root" class="headerlink" title="* System as Root*"></a>* System as Root*</h1><p><em>Your device supports System-as-Root.Use an A/B operating system</em></p><p>也就是说是个SAR A/B机型</p><p>理论上来说，出厂搭载Android9.0的设备都应该是System as Root并且为A/B</p><p>刷Magisk的输出结果也是System-as-Root</p><p>根据A/B的概念，这个设备应该是没有独立的recovery分区，但我在其上检测不到rec的存在。但是刷机包里面倒是真没有recovery</p><p>既然过第一屏了，那么基本可以确定是SAR A/B机型，但是卡在第二屏只有两个可能，第一个是驱动问题，第二个是补丁，与vendor应该无关</p><p>但现在仍然无法确定家教机的pt，以及vendor结构</p><p>等等，那么说有没有是A only的可能呢</p><p>我又刷了A only的Color OS，Pixel，POSP，AOSP，H2OS，MIUI，无一成功，全部无法过第一屏</p><p>话说回来，补丁的问题可能性最大，我的刷机流程都是这样的：</p><p>刷底包（因为暂时无第三方可选就用了自制底包）—清System Data Cache —刷系统镜像—permissioner_V4/5—magisk—结束</p><p>我在我的魅族手机TWRP里发现解除AVB2.0校验，里面的说明如下：</p><p><em>确定要关闭avb2.0校验？</em></p><p><em>DM校验可能会导致设备卡在第一屏。</em></p><p><em>有些设备需要关闭AVB2.0</em></p><p><em>关闭AVB2.0后，可以启动修改的系统或者ROM</em></p><p>我从LR.TEAM中提取出来相应的数据包，在家教机上试下：目录/supersu/no-verity-opt-encrypt</p><p>未完</p>]]></content>
       
       
       
@@ -30,6 +17,19 @@
             <tag> 刷机 </tag>
             
         </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>记录步步高家教机刷原生GSI</title>
+      <link href="/2020/03/15/%E8%AE%B0%E5%BD%95%E6%AD%A5%E6%AD%A5%E9%AB%98%E5%AE%B6%E6%95%99%E6%9C%BA%E5%88%B7%E5%8E%9F%E7%94%9FGSI-1/"/>
+      <url>/2020/03/15/%E8%AE%B0%E5%BD%95%E6%AD%A5%E6%AD%A5%E9%AB%98%E5%AE%B6%E6%95%99%E6%9C%BA%E5%88%B7%E5%8E%9F%E7%94%9FGSI-1/</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+      
       
     </entry>
     
